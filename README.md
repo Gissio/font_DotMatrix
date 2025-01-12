@@ -8,7 +8,7 @@
 
 * **Character Set**: Includes 537 characters featuring the full set from the Epson FX-80 printer, DOS code page 437, Google Fonts Latin Core, Greek Core, Cyrillic Core, and Hebrew. Note, the italic subset is limited to 191 characters due to historical constraints.
 
-* **Dot jitter**: Simulates the inaccuracy of the printing head for an authentic look.
+* **Dot Jitter**: Simulates the inaccuracy of the printing head for an authentic look.
 
 * **Epson FX-80 Modes**: Mapped to different DotMatrix font families:
   
