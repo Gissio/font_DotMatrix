@@ -12,10 +12,10 @@ fi
 python scripts/bdfbuilder.py
 
 # Variables
-COMMON=('-v' '--designer' 'Stefan Schmidt' '--designer-url' 'https://github.com/Gissio/font_DotMatrix' '--manufacturer' 'Stefan Schmidt Art' '--manufacturer-url' 'https://www.stefanschmidtart.com/' '--license' 'This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org' '--license-url' 'https://openfontlicense.org' '--strikeout-position' '3' '--strikeout-thickness' '1' '--underline-position' '-1' '--underline-thickness' '1' '--superscript-scale-x' '1' '--superscript-scale-y' '0.5' '--superscript-offset-x' '0' '--superscript-offset-y' '4' '--subscript-scale-x' '1' '--subscript-scale-y' '0.5' '--subscript-offset-x' '0' '--subscript-offset-y' '0' '--notdef-codepoint' '0x0' '--axes-limits' 'XESP=0.5-1.2' '--glyph-offset-x' '0.5' '--variable-axes' 'ESIZ,XESP' '--static-axes' 'ROND=1,EJIT=0.05')
+COMMON=('-v' '--designer' 'Stefan Schmidt' '--designer-url' 'https://github.com/Gissio/font_DotMatrix' '--manufacturer' 'Stefan Schmidt Art' '--manufacturer-url' 'https://www.stefanschmidtart.com/' '--license' 'This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org' '--license-url' 'https://openfontlicense.org' '--strikeout-position' '3' '--strikeout-thickness' '1' '--underline-position' '-1' '--underline-thickness' '1' '--superscript-scale-x' '1' '--superscript-scale-y' '0.5' '--superscript-offset-x' '0' '--superscript-offset-y' '4' '--subscript-scale-x' '1' '--subscript-scale-y' '0.5' '--subscript-offset-x' '0' '--subscript-offset-y' '0' '--notdef-codepoint' '0x0' '--axes-limits' 'XESP=0.5-1.2' '--variable-axes' 'ESIZ,XESP' '--static-axes' 'ROND=1,EJIT=0.05')
 
 # Monospace single
-COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix' '--glyph-scale-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275')
+COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix' '--glyph-scale-x' '0.5' '--glyph-offset-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275')
 
 python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Regular" --random-seed 0 build/DotMatrix-Regular.bdf build
 gftools builder build/DotMatrix-Regular-config.yaml
@@ -30,7 +30,7 @@ python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Bold Italic" --random
 gftools builder build/DotMatrix-BoldItalic-config.yaml
 
 # Monospace duo
-COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix Duo' '--glyph-scale-x' '1' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275' '--variable-instance' 'UltraCondensed,ESIZ=0.8,XESP=0.5')
+COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix Duo' '--glyph-scale-x' '1' '--glyph-offset-x' '0' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275' '--variable-instance' 'UltraCondensed,ESIZ=0.8,XESP=0.5')
 
 python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Regular" --random-seed 2 build/DotMatrixDuo-Regular.bdf build
 gftools builder build/DotMatrixDuo-Regular-config.yaml
@@ -45,7 +45,7 @@ python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Bold Italic" --random
 gftools builder build/DotMatrixDuo-BoldItalic-config.yaml
 
 # Monospace quad
-COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix Quad' '--glyph-scale-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1')
+COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix Quad' '--glyph-scale-x' '0.5' '--glyph-offset-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1')
 
 python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Regular" --random-seed 4 build/DotMatrixQuad-Regular.bdf build
 gftools builder build/DotMatrixQuad-Regular-config.yaml
@@ -60,7 +60,7 @@ python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Bold Italic" --random
 gftools builder build/DotMatrixQuad-BoldItalic-config.yaml
 
 # Var single
-COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix Var' '--glyph-scale-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275')
+COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix Var' '--glyph-scale-x' '0.5' '--glyph-offset-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275')
 
 python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Regular" --random-seed 6 build/DotMatrixVar-Regular.bdf build
 gftools builder build/DotMatrixVar-Regular-config.yaml
@@ -75,7 +75,7 @@ python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Bold Italic" --random
 gftools builder build/DotMatrixVar-BoldItalic-config.yaml
 
 # Var duo
-COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix VarDuo' '--glyph-scale-x' '1' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275' '--variable-instance' 'UltraCondensed,ESIZ=0.8,XESP=0.5' )
+COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix VarDuo' '--glyph-scale-x' '1' '--glyph-offset-x' '0' '--variable-instance' ',ESIZ=0.8,XESP=1' '--variable-instance' 'Expanded,ESIZ=0.8,XESP=1.2' '--variable-instance' 'Condensed,ESIZ=0.8,XESP=0.58275' '--variable-instance' 'UltraCondensed,ESIZ=0.8,XESP=0.5')
 
 python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Regular" --random-seed 8 build/DotMatrixVarDuo-Regular.bdf build
 gftools builder build/DotMatrixVarDuo-Regular-config.yaml
@@ -90,7 +90,7 @@ python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Bold Italic" --random
 gftools builder build/DotMatrixVarDuo-BoldItalic-config.yaml
 
 # Var quad
-COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix VarQuad' '--glyph-scale-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1')
+COMMON_VAR=("${COMMON[@]}" '--family-name' 'DotMatrix VarQuad' '--glyph-scale-x' '0.5' '--glyph-offset-x' '0.5' '--variable-instance' ',ESIZ=0.8,XESP=1')
 
 python scripts/bdf2ufo.py "${COMMON_VAR[@]}" --style-name "Regular" --random-seed 10 build/DotMatrixVarQuad-Regular.bdf build
 gftools builder build/DotMatrixVarQuad-Regular-config.yaml
