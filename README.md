@@ -59,13 +59,6 @@ Stefan Schmidt is an electrical engineer with graduate studies in signal process
 
 Learn more at [http://www.stefanschmidtart.com](http://www.stefanschmidtart.com).
 
-## Acknowledgements
-
-* The ASCII segment is based on the original Epson FX-80 character set. Thanks to [EPHEX-80](https://github.com/MurphyMc/EPHEX-80) and [E-Keet Epsom](https://fontstruct.com/fontstructions/show/192525/e_keet_epsom) authors.
-* The cyrillic font is inspired by the [Robotron dot matrix printer font](https://github.com/nzeemin/robotron-dotmatrix-font).
-* Some characters take inspiration from [ImgWriter Draft](https://fontstruct.com/fontstructions/show/393784/imgwriter_draft).
-* The Greek font design is influenced by [1541 Ultimate II](https://github.com/GideonZ/1541ultimate).
-
 ## License
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL
