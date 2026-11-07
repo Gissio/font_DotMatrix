@@ -1,2 +1,6 @@
 build
 env
+venv
+build.stamp
+out
+__pycache__

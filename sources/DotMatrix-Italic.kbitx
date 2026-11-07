@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE kbits PUBLIC "-//Kreative//DTD BitsNPicasBitmap 1.0//EN" "http://www.kreativekorp.com/dtd/kbitx.dtd">
 <kbits>
-<prop id="emAscent" value="8"/>
+<prop id="emAscent" value="7"/>
 <prop id="emDescent" value="2"/>
-<prop id="lineAscent" value="8"/>
+<prop id="lineAscent" value="7"/>
 <prop id="lineDescent" value="2"/>
 <prop id="lineGap" value="0"/>
 <prop id="xHeight" value="5"/>
 <prop id="capHeight" value="7"/>
-<name id="0" value="Copyright 2025 The DotMatrix Project Authors (https://github.com/Gissio/font_DotMatrix)"/>
+<name id="0" value="Copyright 2026 The DotMatrix Project Authors (https://github.com/Gissio/font_DotMatrix)"/>
 <name id="1" value="DotMatrix"/>
 <name id="2" value="Italic"/>
 <name id="4" value="DotMatrix Italic"/>
-<name id="5" value="1.000"/>
+<name id="5" value="2.000"/>
 <name id="8" value="Stefan Schmidt Art"/>
 <g u="0" x="0" y="7" w="12" d="CQnI/wD/AP8A/wBCB0LCAP8Dwv8AQgLD/wD/AkIDQQNCAsP/AP8CQsIA/wPC/wBCB0LIAP8A/wD/AP8"/>
 <g u="32" x="0" y="0" w="12" d="AAA"/>

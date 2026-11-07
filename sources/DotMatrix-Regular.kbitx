@@ -8,11 +8,11 @@
 <prop id="lineGap" value="0"/>
 <prop id="xHeight" value="5"/>
 <prop id="capHeight" value="7"/>
-<name id="0" value="Copyright 2025 The DotMatrix Project Authors (https://github.com/Gissio/font_DotMatrix)"/>
+<name id="0" value="Copyright 2026 The DotMatrix Project Authors (https://github.com/Gissio/font_DotMatrix)"/>
 <name id="1" value="DotMatrix"/>
 <name id="2" value="Regular"/>
 <name id="4" value="DotMatrix Regular"/>
-<name id="5" value="1.000"/>
+<name id="5" value="2.000"/>
 <name id="8" value="Stefan Schmidt Art"/>
 <g u="0" x="0" y="7" w="12" d="CQnI/wD/AP8A/wBCB0LCAP8Dwv8AQgLD/wD/AkIDQQNCAsP/AP8CQsIA/wPC/wBCB0LIAP8A/wD/AP8"/>
 <g u="32" x="0" y="0" w="12" d="AAA"/>
@@ -311,20 +311,20 @@
 <g u="731" x="3" y="2" w="12" d="AgJBAkE"/>
 <g u="732" x="0" y="7" w="12" d="AgnEAP8A/wRCBMT/AP8A"/>
 <g u="733" x="2" y="7" w="12" d="AgbCAP8DQgPC/wA"/>
-<g u="768" x="3" y="7" w="12" d="AgJBAkE"/>
-<g u="769" x="4" y="7" w="12" d="AgIBQgE"/>
-<g u="770" x="1" y="7" w="12" d="AgcCw/8A/wJBBUE"/>
-<g u="771" x="0" y="7" w="12" d="AgnEAP8A/wRCBMT/AP8A"/>
-<g u="772" x="2" y="7" w="12" d="AQXF/wD/AP8"/>
-<g u="774" x="1" y="7" w="12" d="AgdBBUECw/8A/wI"/>
-<g u="775" x="4" y="7" w="12" d="AQFB"/>
-<g u="776" x="2" y="7" w="12" d="AQVBA0E"/>
-<g u="778" x="2" y="7" w="12" d="AwXGAP8A/wD/A8b/AP8A/wA"/>
-<g u="779" x="2" y="7" w="12" d="AgbCAP8DQgPC/wA"/>
-<g u="780" x="1" y="7" w="12" d="AgdBBUECw/8A/wI"/>
-<g u="806" x="4" y="2" w="12" d="AgIBQgE"/>
-<g u="807" x="3" y="2" w="12" d="AgJBAkE"/>
-<g u="808" x="2" y="2" w="12" d="AgQDQsMA/wA"/>
+<g u="768" x="-9" y="7" w="0" d="AgJBAkE"/>
+<g u="769" x="-8" y="7" w="0" d="AgIBQgE"/>
+<g u="770" x="-11" y="7" w="0" d="AgcCw/8A/wJBBUE"/>
+<g u="771" x="-12" y="7" w="0" d="AgnEAP8A/wRCBMT/AP8A"/>
+<g u="772" x="-10" y="7" w="0" d="AQXF/wD/AP8"/>
+<g u="774" x="-11" y="7" w="0" d="AgdBBUECw/8A/wI"/>
+<g u="775" x="-8" y="7" w="0" d="AQFB"/>
+<g u="776" x="-10" y="7" w="0" d="AQVBA0E"/>
+<g u="778" x="-10" y="7" w="0" d="AwXGAP8A/wD/A8b/AP8A/wA"/>
+<g u="779" x="-10" y="7" w="0" d="AgbCAP8DQgPC/wA"/>
+<g u="780" x="-11" y="7" w="0" d="AgdBBUECw/8A/wI"/>
+<g u="806" x="-8" y="2" w="0" d="AgIBQgE"/>
+<g u="807" x="-9" y="2" w="0" d="AgJBAkE"/>
+<g u="808" x="-10" y="2" w="0" d="AgQDQsMA/wA"/>
 <g u="884" x="4" y="7" w="12" d="AgFC"/>
 <g u="885" x="4" y="1" w="12" d="AgIBQgE"/>
 <g u="894" x="2" y="5" w="12" d="BwPC/wBCwgD/A8L/AELCAP8CQgI"/>

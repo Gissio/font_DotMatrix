@@ -3,7 +3,7 @@
     within code editors. For true scale, use <b>10 point text</b>.</p>
 <p>It features:</p>
 <ul>
-    <li><b>Character Set</b>: Includes 537 characters featuring the full set from the Epson FX-80 printer, DOS code page
+    <li><b>Character Set</b>: Includes 650 characters featuring the full set from the Epson FX-80 printer, DOS code page
         437, Google Fonts Latin Core, Greek Core, Cyrillic Core, and Hebrew. Note, the italic subset is limited to 191
         characters due to historical constraints.</li>
     <li><b>Dot Jitter</b>: Simulates the inaccuracy of the printing head for an authentic look.</li>
@@ -11,52 +11,56 @@
         <table>
             <tr>
                 <th>Epson FX-80 Mode</th>
+                <th>Pitch (cpi)</th>
                 <th>DotMatrix Font Family</th>
             </tr>
             <tr>
                 <td>Pica</td>
-                <td>DotMatrix</td>
+                <td>10</td>
+                <td>DotMatrix SemiExpanded</td>
             </tr>
             <tr>
                 <td>Elite</td>
-                <td>DotMatrix Expanded</td>
+                <td>12</td>
+                <td>DotMatrix</td>
             </tr>
             <tr>
                 <td>Compressed</td>
+                <td>17.16</td>
                 <td>DotMatrix Condensed</td>
             </tr>
             <tr>
                 <td>Expanded Pica</td>
-                <td>DotMatrix Duo</td>
+                <td>5</td>
+                <td>DotMatrix UltraExpanded</td>
             </tr>
             <tr>
                 <td>Expanded Elite</td>
-                <td>DotMatrix Duo Expanded</td>
+                <td>6</td>
+                <td>DotMatrix ExtraExpanded</td>
             </tr>
             <tr>
                 <td>Expanded Compressed</td>
-                <td>DotMatrix Duo Condensed</td>
+                <td>8.58</td>
+                <td>DotMatrix Expanded</td>
             </tr>
             <tr>
                 <td>Emphasized Pica</td>
-                <td>DotMatrix Duo UltraCondensed</td>
+                <td>10</td>
+                <td>DotMatrix Emphasized SemiExpanded</td>
             </tr>
             <tr>
                 <td>Emphasized Expanded Pica</td>
-                <td>DotMatrix Quad</td>
+                <td>5</td>
+                <td>DotMatrix Emphasized UltraExpanded</td>
             </tr>
         </table>
         <ul>
             <li><b>"Double-strike"</b> is represented by the Bold style.</li>
             <li><b>"Italic"</b> corresponds to the Italic style.
-            <li><b>"Proportional mode"</b> is mapped to the respective <b>Var</b> font families.</li>
+            <li><b>"Proportional mode"</b> is mapped to the respective <b>Prop</b> font families.</li>
         </ul>
     </li>
-    <li><b>Variable Font Axes</b>:
-        <ul>
-            <li><b>Element Size</b>: Adjusts the dot strength.</li>
-            <li><b>Horizontal Element Spacing</b>: Modifies the font width.</li>
-        </ul>
-    </li>
+    <li><b>Fixed Print Modes</b>: Like the printer, every print mode is a static font.</li>
 </ul>
 <p>To contribute, see <a href="https://github.com/Gissio/font_DotMatrix">github.com/Gissio/font_DotMatrix</a>.</p>
