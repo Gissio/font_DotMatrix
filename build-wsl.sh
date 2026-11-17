@@ -10,7 +10,7 @@
 # The copy lives in $BUILD_DIR (default: ~/.cache/wsl-build/<repository name>).
 # It keeps its own venv between runs, which is updated when requirements.txt
 # changes. The generated files (the build folder) are made again on every run.
-# Only the fonts are copied back here.
+# Only the fonts and index.html are copied back here.
 #
 # gftools builder runs ninja with one job per CPU plus two, and a fontmake job
 # can take about 3 GB, which runs WSL out of memory on a machine with many
@@ -77,10 +77,14 @@ fi
 echo "Running make build in $BUILD_DIR on $BUILD_CPUS CPUs"
 (cd "$BUILD_DIR" && taskset -c "0-$(( BUILD_CPUS - 1 ))" make build)
 
-# Copy the fonts back. The build folder is generated, so it stays in the copy.
+# Copy the fonts and the glyph viewer back. The build folder is generated, so
+# it stays in the copy.
 echo "Copying results back to $REPO_DIR"
 if [ -d "$BUILD_DIR/fonts" ]; then
     rsync -a --delete "$BUILD_DIR/fonts/" "$REPO_DIR/fonts/"
+fi
+if [ -e "$BUILD_DIR/index.html" ]; then
+    rsync -a "$BUILD_DIR/index.html" "$REPO_DIR/"
 fi
 
 echo "Done in $(( $(date +%s) - start )) s"

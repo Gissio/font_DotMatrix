@@ -12,18 +12,22 @@ build/sources.stamp: venv build/base/DotMatrix-Regular.bdf build/base/DotMatrix-
 	. venv/bin/activate; python3 scripts/build-dotmatrix-sources.py
 	touch build/sources.stamp
 
+# The glyph table of the glyph viewer (the GitHub Pages site)
+index.html: venv build.stamp scripts/update-index.py
+	. venv/bin/activate; python3 scripts/update-index.py index.html --family "DotMatrix" "fonts/webfonts/DotMatrix-Regular.woff2"
+
 help:
 	@echo "###"
 	@echo "# Build targets for DotMatrix"
 	@echo "###"
 	@echo
-	@echo "  make build:  Builds the fonts and places them in the fonts/ directory"
+	@echo "  make build:  Builds the fonts and places them in the fonts/ directory, and updates index.html"
 	@echo "  make test:   Tests the fonts with fontspector"
 	@echo "  make images: Builds the specimen images in the documentation/ directory"
 	@echo "  make clean:  Removes the venv and the generated files"
 	@echo
 
-build: build.stamp
+build: build.stamp index.html
 
 images: venv build.stamp
 	. venv/bin/activate; python3 documentation/build-specimen.py

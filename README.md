@@ -2,6 +2,8 @@
 
 # DotMatrix
 
+**[Browse all glyphs →](https://gissio.github.io/font_DotMatrix)**
+
 **DotMatrix** is a contemporary revival of classic 1980s dot matrix printing, faithfully recreating the texture, rhythm, and mechanical imperfections of early impact printers. Inspired by the iconic Epson FX-80, it captures the distinctive look of inked pins striking paper—bringing authentic retro computing aesthetics into modern digital typography.
 
 Designed for nostalgia-driven interfaces, ASCII/ANSI art, and coding environments, DotMatrix balances historical accuracy with practical usability. For optimal fidelity, use the font at **10 pt**, its original physical scale: a row of dots is then 1/72 inch, the spacing of the 9 pins of the print head.
@@ -107,6 +109,8 @@ The line height of the fonts is 12 rows, 1.2 em: the 6 lines per inch of the pri
 * New specimen and presentation images, built by `documentation/build-specimen.py` (`make images`).
 * Updated bdf2ufo to 1.8.
 * The build converts the `.kbitx` sources with `scripts/kbitx2bdf.py` and runs with `make build`. Added `build-wsl.sh`.
+* Added a [glyph viewer](https://gissio.github.io/font_DotMatrix) of DotMatrix Regular (`index.html`), updated by `scripts/update-index.py` on `make build`.
+* The Google Fonts description is now the article `documentation/ARTICLE.en_us.html`, updated to this release, with the specimen images.
 
 ### 1.001
 
@@ -131,13 +135,13 @@ Then run:
 make build
 ```
 
-The fonts are placed in `fonts/`. Other targets:
+The fonts are placed in `fonts/`, and the glyph table of the glyph viewer (`index.html`) is updated from DotMatrix Regular. Other targets:
 
 * `make images`: builds the specimen and presentation images in `documentation/`.
 * `make test`: tests the fonts with fontspector.
 * `make clean`: removes the venv and the generated files.
 
-On Windows, run `./build-wsl.sh` from WSL: it builds in a copy on the Linux filesystem, which is much faster than building under `/mnt`, and copies the fonts back.
+On Windows, run `./build-wsl.sh` from WSL: it builds in a copy on the Linux filesystem, which is much faster than building under `/mnt`, and copies the fonts and `index.html` back.
 
 ## Designer
 
