@@ -1,0 +1,52 @@
+# ---
+# bdf2ufo configuration shared by all DotMatrix fonts.
+#
+# build.sh appends the options that differ between fonts (family and style name,
+# double strike, random seed, glyph offset, units per element, monospace advance
+# and instances) to a copy of this file, in build/<family>-<style>/.
+#
+# Axes (see bdf2ufo): wght is the element size (400 fills a pixel), wdth the
+# horizontal element spacing, ROND the roundness and JITT the dot jitter.
+# ---
+
+designer: "Stefan Schmidt"
+designer_url: "https://github.com/Gissio/font_DotMatrix"
+
+manufacturer: "Stefan Schmidt Art"
+manufacturer_url: "https://www.stefanschmidtart.com/"
+
+license: "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+license_url: "https://openfontlicense.org"
+
+# The Unicode codepoint for the .notdef character, which is used when a glyph is missing.
+notdef_character: "\u0000"
+
+# Underline metrics, in pixel units.
+underline_position: -1
+underline_thickness: 1
+
+# Strikeout metrics, in pixel units.
+strikeout_position: 3
+strikeout_thickness: 1
+
+# Superscript metrics: scale in em units, offset in pixel units.
+superscript_scale: [1, 0.5]
+superscript_offset: [0, 4]
+
+# Subscript metrics: scale in em units, offset in pixel units.
+subscript_scale: [1, 0.5]
+subscript_offset: [0, 0]
+
+# Units per em. The units per element are set per font.
+units_per_em: 2048
+
+# Whether to use an element glyph for each bitmap pixel.
+use_element_glyph: true
+
+# Axis values. DotMatrix has no variable axes, as each print mode of the
+# Epson FX-80 is fixed: the elements are fully round (ROND) with a slight jitter
+# (JITT), as the dots of the printer. The weight (wght) and the width (wdth) are
+# set per font.
+default_axis_values:
+  "ROND": 100
+  "JITT": 50
