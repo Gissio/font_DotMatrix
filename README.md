@@ -27,13 +27,13 @@ The styles are Regular, Bold, Italic and Bold Italic. **Bold** is the printer's 
 
 ### Extensive Character Set
 
-DotMatrix includes **650 characters**, combining multiple historical and modern standards:
+DotMatrix includes **897 characters**, combining multiple historical and modern standards:
 
 * Epson FX-80 native glyph set
-* DOS Code Page 437
-* Google Fonts Latin, Greek, Cyrillic, and Hebrew Core
+* Google Fonts Latin, Greek, and Cyrillic Core, and Hebrew
+* DOS Code Pages 437 and 850
 
-The Italic style contains a reduced subset of **191 characters**, reflecting the limitations of original hardware implementations.
+Like on the Epson FX-80, the text characters are slanted, and the graphic characters (box drawing, blocks, shapes, arrows, math symbols) and the Hebrew letters are upright.
 
 ### Authentic Dot Jitter
 
@@ -41,7 +41,7 @@ Subtle, controlled irregularities simulate the mechanical variance of print head
 
 ### The Ink of a Coding Font
 
-The dots are 0.96 of a row, a little bigger than the pins of the printer, so that the ink of Regular and Bold is that of the common coding fonts. They still do not touch, so the dotted look stays.
+The dots are 1.10 of a row, bigger than the pins of the printer, as the ink of the ribbon spreads, so that the ink of Regular and Bold is that of the common coding fonts, such as JetBrains Mono. Neighbouring dots overlap a little, so the strokes are continuous, and the dotted look stays.
 
 ### Epson FX-80 Mode Mapping
 
@@ -66,10 +66,6 @@ Additional mappings:
 
 The names say how wide a font is, with the width words of the OpenType width classes, and whether it is Emphasized (every dot struck twice, side by side). The widths are ranks, not exact percentages: Condensed, Normal (DotMatrix), SemiExpanded, Expanded, ExtraExpanded and UltraExpanded.
 
-### Fixed Print Modes
-
-Like the printer, DotMatrix has no continuous controls: every print mode is a static font, so the family you pick is the mode you get.
-
 ## Using the fonts
 
 The built fonts are in `fonts/`: `ttf` and `otf` for desktop applications, and `webfonts` (`.woff2`) for the web.
@@ -85,11 +81,11 @@ On the web, a family is its name and its style:
 code {
   font-family: "DotMatrix", monospace;
   font-size: 10pt;
-  line-height: 1.2; /* the printer's 6 lines per inch */
+  line-height: normal; /* the printer's 6 lines per inch */
 }
 ```
 
-The line height of the fonts is 1 em. In editors, a line spacing of 1.2 gives the 6 lines per inch of the printer.
+The line height of the fonts is 12 rows, 1.2 em: the 6 lines per inch of the printer. Editors that use the line height of the font get it without any setting.
 
 ## Samples
 
@@ -105,7 +101,7 @@ The line height of the fonts is 1 em. In editors, a line spacing of 1.2 gives th
 * Corrected the pitches to those of the Epson FX-80, and gave Pica the real 1.2:1 aspect of its dots. **DotMatrix** is now Elite (12 cpi, 0.6 em wide at 10 pt, the cell of the common coding fonts), which was DotMatrix SemiCondensed. Pica (10 cpi) is now **DotMatrix SemiExpanded**, which was DotMatrix Expanded. Compressed (17.16 cpi) is now **DotMatrix Condensed**.
 * The fonts are named by their width and by Emphasized, not by the number of strikes. **Duo** is now Expanded, ExtraExpanded or UltraExpanded, **Duo UltraCondensed** is now **Emphasized SemiExpanded**, and **Quad** is now **Emphasized UltraExpanded**. The pitches and the shapes of the fonts are unchanged.
 * The proportional families were renamed **Prop**.
-* The dots are 0.96 of a row, a little bigger than the pins of the printer, so that the ink of Regular and Bold matches the common coding fonts.
+* The dots are 1.10 of a row, bigger than the pins of the printer, so that the ink of Regular and Bold matches the common coding fonts.
 * Regular is weight 400 and Bold is weight 700.
 * Combining marks have zero advance and attach to their base letters.
 * New specimen and presentation images, built by `documentation/build-specimen.py` (`make images`).
