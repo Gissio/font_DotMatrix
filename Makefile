@@ -6,7 +6,7 @@ build/base/%.bdf: venv sources/%.kbitx
 	mkdir -p build/base
 	. venv/bin/activate; python3 scripts/kbitx2bdf.py "sources/$*.kbitx" "build/base/$*.bdf"
 
-# The .bdf fonts of the dot layouts (single, double, quad, Prop...), and the masters and the
+# The .bdf fonts of the dot layouts (Mono and Sans, single and double), and the masters and the
 # gftools builder configuration of each font, made from the base .bdf fonts
 build/sources.stamp: venv build/base/DotMatrix-Regular.bdf build/base/DotMatrix-Italic.bdf sources/DotMatrix-build-config.yaml scripts/build-dotmatrix-sources.py
 	. venv/bin/activate; python3 scripts/build-dotmatrix-sources.py
@@ -14,7 +14,7 @@ build/sources.stamp: venv build/base/DotMatrix-Regular.bdf build/base/DotMatrix-
 
 # The glyph table of the glyph viewer (the GitHub Pages site)
 index.html: venv build.stamp scripts/update-index.py
-	. venv/bin/activate; python3 scripts/update-index.py index.html --family "DotMatrix" "fonts/webfonts/DotMatrix-Regular.woff2"
+	. venv/bin/activate; python3 scripts/update-index.py index.html --family "DotMatrix Mono" "fonts/webfonts/DotMatrixMono-Regular.woff2"
 
 help:
 	@echo "###"

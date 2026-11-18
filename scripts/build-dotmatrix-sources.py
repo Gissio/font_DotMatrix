@@ -12,19 +12,24 @@
 # Like the Epson FX-80, DotMatrix has no continuous controls: each font is one
 # print mode. The modes are named by their width and by Emphasized. Elite, at 12
 # cpi, is 0.6 em wide at 10 pt, as the common coding fonts are: it is the Normal
-# width, and the plain DotMatrix. The widths are ranks, as the width classes are:
+# width, and the plain DotMatrix Mono. The widths are ranks, as the width classes
+# are:
 #
-#   Compressed (17.16 cpi)           DotMatrix Condensed                 3
-#   Elite (12 cpi)                   DotMatrix                           5
-#   Pica (10 cpi)                    DotMatrix SemiExpanded              6
-#   Emphasized Pica                  DotMatrix Emphasized SemiExpanded   6
-#   Expanded Compressed (8.58 cpi)   DotMatrix Expanded                  7
-#   Expanded Elite (6 cpi)           DotMatrix ExtraExpanded             8
-#   Expanded Pica (5 cpi)            DotMatrix UltraExpanded             9
-#   Emphasized Expanded Pica         DotMatrix Emphasized UltraExpanded  9
+#   Compressed (17.16 cpi)           DotMatrix Mono Condensed                 3
+#   Elite (12 cpi)                   DotMatrix Mono                           5
+#   Pica (10 cpi)                    DotMatrix Mono SemiExpanded              6
+#   Emphasized Pica                  DotMatrix Mono Emphasized SemiExpanded   6
+#   Expanded Compressed (8.58 cpi)   DotMatrix Mono Expanded                  7
+#   Expanded Elite (6 cpi)           DotMatrix Mono ExtraExpanded             8
+#   Expanded Pica (5 cpi)            DotMatrix Mono UltraExpanded             9
+#   Emphasized Expanded Pica         DotMatrix Mono Emphasized UltraExpanded  9
 #
-# Each has a proportional version (DotMatrix Prop ...). The styles are Regular,
-# Bold (double strike), Italic and Bold Italic. A font is a mode in a style.
+# Each has a proportional version, DotMatrix Sans: DotMatrix Sans, DotMatrix
+# Sans Condensed... The styles are Regular, Bold (double strike), Italic and
+# Bold Italic. A font is a mode in a style.
+#
+# The Emphasized modes are not built (see BUILD_EMPHASIZED): Bold makes the
+# text heavier. They can still be generated.
 #
 # (C) 2024-2026 Gissio
 #
@@ -99,9 +104,7 @@ class Mode:
     wdth: float
 
     def family_name(self, proportional):
-        words = ["DotMatrix"]
-        if proportional:
-            words.append("Prop")
+        words = ["DotMatrix", "Sans" if proportional else "Mono"]
         if self.emphasized:
             words.append("Emphasized")
         if self.width:
@@ -122,6 +125,12 @@ MODES = [
     Mode("UltraExpanded", False, 2, 100, 200),
     Mode("UltraExpanded", True, 4, 100, 200),
 ]
+
+# Whether the Emphasized modes are built. They are not: Bold already makes the
+# text heavier, and they would only cover two widths. Without them, the quad
+# layout (repeat 4) is not built either. The random seeds are set by the
+# layout, so the other fonts are the same either way.
+BUILD_EMPHASIZED = False
 
 
 # The weight (wght) of the regular and bold styles. The elements are 1.10 of a
@@ -154,7 +163,8 @@ class Layout:
     """How the dots of the fonts that share a .bdf font are laid out.
 
     Attributes:
-        proportional: Whether the fonts are proportional (Prop).
+        proportional: Whether the fonts are proportional (Sans) or monospace
+            (Mono).
         repeat: The number of times each dot is repeated: 1, 2 or 4.
     """
 
@@ -164,11 +174,16 @@ class Layout:
     @property
     def key(self):
         """The name of the .bdf font, without the style."""
-        return f"DotMatrix{'Prop' if self.proportional else ''}-x{self.repeat}"
+        return f"DotMatrix{self.group}-x{self.repeat}"
 
     @property
     def name(self):
-        return f"DotMatrix{' Prop' if self.proportional else ''} x{self.repeat}"
+        return f"DotMatrix {self.group} x{self.repeat}"
+
+    @property
+    def group(self):
+        """Sans for the proportional fonts, Mono for the monospace fonts."""
+        return "Sans" if self.proportional else "Mono"
 
     @property
     def index(self):
@@ -486,7 +501,7 @@ def derive_mark_anchors(path):
 
 
 def font_key(family_name, style):
-    """The name of a font, without spaces: DotMatrixEmphasized-BoldItalic."""
+    """The name of a font, without spaces: DotMatrixMonoEmphasized-BoldItalic."""
     return f"{family_name.replace(' ', '')}-{style.key}"
 
 
@@ -559,6 +574,14 @@ def main():
             shutil.rmtree(font_dir)
 
     for layout in LAYOUTS:
+        modes = [
+            mode
+            for mode in MODES
+            if mode.repeat == layout.repeat and (BUILD_EMPHASIZED or not mode.emphasized)
+        ]
+        if not modes:
+            continue
+
         anchors = {}
 
         for base_style, base in base_fonts.items():
@@ -567,7 +590,6 @@ def main():
             build_bdf(base, layout, base_style, path)
             anchors[base_style] = derive_mark_anchors(path)
 
-        modes = [mode for mode in MODES if mode.repeat == layout.repeat]
         for mode, style in itertools.product(modes, STYLES):
             family_name = mode.family_name(layout.proportional)
             key = font_key(family_name, style)

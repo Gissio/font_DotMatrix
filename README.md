@@ -8,108 +8,70 @@
 
 Designed for nostalgia-driven interfaces, ASCII/ANSI art, and coding environments, DotMatrix balances historical accuracy with practical usability. For optimal fidelity, use the font at **10 pt**, its original physical scale: a row of dots is then 1/72 inch, the spacing of the 9 pins of the print head.
 
-## Which font?
+## The fonts
 
-DotMatrix is 16 families of 4 styles each, 64 fonts in all: one family for every print mode of the printer. You pick the mode by picking the family.
+DotMatrix comes in two groups: **DotMatrix Mono**, the monospace fonts, and **DotMatrix Sans**, the same letters in the printer's proportional mode. Each has 6 families, one for each pitch of the printer, in 4 styles: 48 fonts in all. You pick the mode by picking the family.
 
-| You want                                 | Use                                              |
-| ---------------------------------------- | ------------------------------------------------ |
-| Code editors and terminals               | **DotMatrix**                                    |
-| The default look of the printer          | DotMatrix SemiExpanded                           |
-| Dense listings                           | DotMatrix Condensed                              |
-| Headlines and banners                    | DotMatrix Expanded, ExtraExpanded, UltraExpanded |
-| Heavier text, by the printer's own means | DotMatrix Emphasized SemiExpanded                |
-| Running text that reads as typeset       | DotMatrix Prop (the proportional families)       |
+| Epson FX-80 mode    | Pitch (cpi) | Family                                 | Use it for                         |
+| ------------------- | ----------- | -------------------------------------- | ---------------------------------- |
+| Elite               | 12          | **DotMatrix Mono**                     | Code editors and terminals         |
+| Pica                | 10          | DotMatrix Mono SemiExpanded            | The default look of the printer    |
+| Compressed          | 17.16       | DotMatrix Mono Condensed               | Dense listings                     |
+| Expanded Compressed | 8.58        | DotMatrix Mono Expanded                | Headlines and banners              |
+| Expanded Elite      | 6           | DotMatrix Mono ExtraExpanded           | Headlines and banners              |
+| Expanded Pica       | 5           | DotMatrix Mono UltraExpanded           | Headlines and banners              |
+| Proportional        |             | **DotMatrix Sans**, in the same widths | Running text that reads as typeset |
 
-The plain **DotMatrix** is Elite, the 12 characters per inch mode. At 10 pt it is 0.6 em wide, the cell that the common coding fonts use, so it fits the column settings of editors and terminals. Pica, the default mode of the printer, is wider, and is named so.
+The plain **DotMatrix Mono** is Elite: at 10 pt it is 0.6 em wide, the cell of the common coding fonts, so it fits the column settings of editors and terminals. The names use the width words of the OpenType width classes, as ranks rather than exact percentages.
 
 The styles are Regular, Bold, Italic and Bold Italic. **Bold** is the printer's double strike: the second strike is half a row lower.
 
 ## Features
 
-### Extensive Character Set
-
-DotMatrix includes **897 characters**, combining multiple historical and modern standards:
-
-* Epson FX-80 native glyph set
-* Google Fonts Latin, Greek, and Cyrillic Core, and Hebrew
-* DOS Code Pages 437 and 850
-
-Like on the Epson FX-80, the text characters are slanted, and the graphic characters (box drawing, blocks, shapes, arrows, math symbols) and the Hebrew letters are upright.
-
-### Authentic Dot Jitter
-
-Subtle, controlled irregularities simulate the mechanical variance of print heads, reproducing the organic “wobble” characteristic of real dot matrix output.
-
-### The Ink of a Coding Font
-
-The dots are 1.10 of a row, bigger than the pins of the printer, as the ink of the ribbon spreads, so that the ink of Regular and Bold is that of the common coding fonts, such as JetBrains Mono. Neighbouring dots overlap a little, so the strokes are continuous, and the dotted look stays.
-
-### Epson FX-80 Mode Mapping
-
-DotMatrix translates classic printer modes into a structured font family system:
-
-| Epson FX-80 Mode         | Pitch (cpi) | DotMatrix Family                   |
-| ------------------------ | ----------- | ---------------------------------- |
-| Pica                     | 10          | DotMatrix SemiExpanded             |
-| Elite                    | 12          | DotMatrix                          |
-| Compressed               | 17.16       | DotMatrix Condensed                |
-| Expanded Pica            | 5           | DotMatrix UltraExpanded            |
-| Expanded Elite           | 6           | DotMatrix ExtraExpanded            |
-| Expanded Compressed      | 8.58        | DotMatrix Expanded                 |
-| Emphasized Pica          | 10          | DotMatrix Emphasized SemiExpanded  |
-| Emphasized Expanded Pica | 5           | DotMatrix Emphasized UltraExpanded |
-
-Additional mappings:
-
-* **Double-strike** → Bold
-* **Italic** → Italic
-* **Proportional mode** → Proportional font families (Prop), for example DotMatrix Prop Condensed
-
-The names say how wide a font is, with the width words of the OpenType width classes, and whether it is Emphasized (every dot struck twice, side by side). The widths are ranks, not exact percentages: Condensed, Normal (DotMatrix), SemiExpanded, Expanded, ExtraExpanded and UltraExpanded.
+* **897 characters**: the Epson FX-80 character set, DOS code pages 437 and 850, Google Fonts Latin, Greek and Cyrillic Core, and Hebrew. As on the printer, the italic styles slant the text characters, while the graphic characters (box drawing, blocks, shapes, arrows, math symbols) and the Hebrew letters stay upright.
+* **Dot jitter**: subtle, controlled irregularities simulate the mechanical variance of the print head, reproducing the wobble of real dot matrix output.
+* **The ink of a coding font**: the dots are 1.10 of a row, bigger than the pins of the printer, as the ink of the ribbon spreads, so that Regular and Bold have the ink of the common coding fonts, such as JetBrains Mono. Neighbouring dots overlap a little, so the strokes are continuous and the dotted look stays.
 
 ## Using the fonts
 
-The built fonts are in `fonts/`: `ttf` and `otf` for desktop applications, and `webfonts` (`.woff2`) for the web.
-
-On the web, a family is its name and its style:
+The built fonts are in `fonts/`: `ttf` and `otf` for desktop applications, and `webfonts` (`.woff2`) for the web, where each style is a font of its own:
 
 ```css
 @font-face {
-  font-family: "DotMatrix";
-  src: url("fonts/webfonts/DotMatrix-Regular.woff2") format("woff2");
+  font-family: "DotMatrix Mono";
+  src: url("fonts/webfonts/DotMatrixMono-Regular.woff2") format("woff2");
 }
 
 code {
-  font-family: "DotMatrix", monospace;
+  font-family: "DotMatrix Mono", monospace;
   font-size: 10pt;
-  line-height: normal; /* the printer's 6 lines per inch */
+  line-height: normal;
 }
 ```
 
-The line height of the fonts is 12 rows, 1.2 em: the 6 lines per inch of the printer. Editors that use the line height of the font get it without any setting.
+The line height of the fonts is 12 rows, 1.2 em: the 6 lines per inch of the printer. Editors and browsers that use the line height of the font get it without any setting.
 
 ## Samples
 
 ![Sample 1](documentation/DotMatrix-Sample1.jpg)
 ![Sample 2](documentation/DotMatrix-Sample2.jpg)
 ![Sample 3](documentation/DotMatrix-Sample3.jpg)
-![Sample 4](documentation/DotMatrix-Sample4.jpg)
 
 ## Releases
 
 ### 2.000
 
-* Corrected the pitches to those of the Epson FX-80, and gave Pica the real 1.2:1 aspect of its dots. **DotMatrix** is now Elite (12 cpi, 0.6 em wide at 10 pt, the cell of the common coding fonts), which was DotMatrix SemiCondensed. Pica (10 cpi) is now **DotMatrix SemiExpanded**, which was DotMatrix Expanded. Compressed (17.16 cpi) is now **DotMatrix Condensed**.
-* The fonts are named by their width and by Emphasized, not by the number of strikes. **Duo** is now Expanded, ExtraExpanded or UltraExpanded, **Duo UltraCondensed** is now **Emphasized SemiExpanded**, and **Quad** is now **Emphasized UltraExpanded**. The pitches and the shapes of the fonts are unchanged.
-* The proportional families were renamed **Prop**.
+* The fonts are in two groups: **DotMatrix Mono**, the monospace fonts, which were DotMatrix, and **DotMatrix Sans**, the proportional fonts, which were DotMatrix Var.
+* Corrected the pitches to those of the Epson FX-80, and gave Pica the real 1.2:1 aspect of its dots. **DotMatrix Mono** is now Elite (12 cpi, 0.6 em wide at 10 pt, the cell of the common coding fonts), which was DotMatrix SemiCondensed. Pica (10 cpi) is now **DotMatrix Mono SemiExpanded**, which was DotMatrix Expanded. Compressed (17.16 cpi) is now **DotMatrix Mono Condensed**.
+* The fonts are named by their width, not by the number of strikes. **Duo** is now Expanded, ExtraExpanded or UltraExpanded, with unchanged pitches and shapes.
+* Dropped **Duo UltraCondensed** and **Quad**, the Emphasized modes, which strike every dot twice side by side: Bold makes the text heavier.
 * The dots are 1.10 of a row, bigger than the pins of the printer, so that the ink of Regular and Bold matches the common coding fonts.
 * Regular is weight 400 and Bold is weight 700.
 * Combining marks have zero advance and attach to their base letters.
 * New specimen and presentation images, built by `documentation/build-specimen.py` (`make images`).
 * Updated bdf2ufo to 1.8.
 * The build converts the `.kbitx` sources with `scripts/kbitx2bdf.py` and runs with `make build`. Added `build-wsl.sh`.
-* Added a [glyph viewer](https://gissio.github.io/font_DotMatrix) of DotMatrix Regular (`index.html`), updated by `scripts/update-index.py` on `make build`.
+* Added a [glyph viewer](https://gissio.github.io/font_DotMatrix) of DotMatrix Mono Regular (`index.html`), updated by `scripts/update-index.py` on `make build`.
 * The Google Fonts description is now the article `documentation/ARTICLE.en_us.html`, updated to this release, with the specimen images.
 
 ### 1.001
@@ -122,26 +84,19 @@ The line height of the fonts is 12 rows, 1.2 em: the 6 lines per inch of the pri
 
 ## Build
 
-To build the font from source, ensure you have:
-
-* Python 3.10+
-* `pip`
-* `virtualenv`
-* `make`
-
-Then run:
+To build the fonts from source, you need Python 3.10+, `pip`, `virtualenv` and `make`. Then run:
 
 ```bash
 make build
 ```
 
-The fonts are placed in `fonts/`, and the glyph table of the glyph viewer (`index.html`) is updated from DotMatrix Regular. Other targets:
+The fonts are placed in `fonts/`, and the glyph table of the glyph viewer (`index.html`) is updated from DotMatrix Mono Regular. Other targets:
 
 * `make images`: builds the specimen and presentation images in `documentation/`.
 * `make test`: tests the fonts with fontspector.
 * `make clean`: removes the venv and the generated files.
 
-On Windows, run `./build-wsl.sh` from WSL: it builds in a copy on the Linux filesystem, which is much faster than building under `/mnt`, and copies the fonts and `index.html` back.
+On Windows, run `./build-wsl.sh` from WSL, with the make targets you want (`build` by default, for example `./build-wsl.sh images`): it runs make in a copy on the Linux filesystem, which is much faster than building under `/mnt`, and copies the fonts, `index.html` and the images back.
 
 ## Designer
 

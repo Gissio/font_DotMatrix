@@ -6,16 +6,16 @@
 # the page is about. The glyphs are the real glyphs of the fonts, so the dots are
 # the dots of the fonts; the paper and the ribbon are the only simulation.
 #
-# One specimen per group of print modes, grouped by the pitch of the characters,
-# the most used first:
+# One specimen per group, its six widths from the narrowest to the widest:
 #
-#   DotMatrix-Sample1.jpg   Elite (DotMatrix), Pica, Emphasized Pica, Compressed
-#   DotMatrix-Sample2.jpg   Expanded
-#   DotMatrix-Sample3.jpg   Proportional
-#   DotMatrix-Sample4.jpg   the character set, with its title
+#   DotMatrix-Sample1.jpg   DotMatrix Mono
+#   DotMatrix-Sample2.jpg   DotMatrix Sans (the proportional mode)
+#   DotMatrix-Sample3.jpg   the character set
 #
-# Within a mode, each style is a line of its own: Regular, Bold (double-strike),
-# Italic and Bold Italic.
+# Every page has a title. Each width is a block of four lines, one per style
+# (Regular, Bold, Italic and Bold Italic), and the blocks are in pairs side by
+# side: the plain width and Condensed, SemiExpanded and Expanded, ExtraExpanded
+# and UltraExpanded.
 #
 # Every glyph of DotMatrix is a composite of one round element glyph, so the
 # position of every dot (its jitter, and the second strike of the double-strike
@@ -220,30 +220,18 @@ STYLES = [
     Style("BoldItalic", "Bold Italic"),
 ]
 
-# Elite (the plain DotMatrix), Pica and Emphasized Pica, which strikes every dot
-# twice, side by side, and Compressed
-PRINT = [
-    Mode("DotMatrix"),
-    Mode("DotMatrix SemiExpanded"),
-    Mode("DotMatrix Emphasized SemiExpanded"),
-    Mode("DotMatrix Condensed"),
+# The widths of a page, in pairs of blocks side by side: Elite (the plain font)
+# and Compressed, Pica and Expanded Compressed, Expanded Elite and Expanded Pica
+PAGE_WIDTHS = [
+    ["", "Condensed"],
+    ["SemiExpanded", "Expanded"],
+    ["ExtraExpanded", "UltraExpanded"],
 ]
+COLUMN_GAP = 30
 
-# Expanded prints every character twice as wide: Expanded Compressed, Elite and
-# Pica. Emphasized Expanded Pica is DotMatrix Emphasized UltraExpanded.
-EXPANDED = [
-    Mode("DotMatrix Expanded"),
-    Mode("DotMatrix ExtraExpanded"),
-    Mode("DotMatrix UltraExpanded"),
-    Mode("DotMatrix Emphasized UltraExpanded"),
-]
 
-PROPORTIONAL = [
-    Mode("DotMatrix Prop"),
-    Mode("DotMatrix Prop SemiExpanded"),
-    Mode("DotMatrix Prop Emphasized SemiExpanded"),
-    Mode("DotMatrix Prop Condensed"),
-]
+def group_mode(group, width):
+    return Mode(" ".join(filter(None, ["DotMatrix", group, width])))
 
 # --- The fonts ---------------------------------------------------------------
 
@@ -295,67 +283,117 @@ def text_width(face, text):
 
 # --- The pages ---------------------------------------------------------------
 
-# A page is a list of lines, one per print line: None for a blank line, or
-# (text, font, centered)
+# A page is a list of lines, one per print line: None for a blank line, or a
+# list of cells, (text, font, x), x being the start of the text in pixels
 
 
-def title_line(fonts_path, text):
-    return (text, get_font(fonts_path, "DotMatrix", "Bold"), True)
+def text_line(face, text):
+    return [(text, face, TEXT_LEFT)]
 
 
-# What a line says, from the most to the least: the font as a font menu lists it
-# with its style, the font, the font with Emphasized abbreviated (Emph), the font
-# with Emphasized and Expanded abbreviated (Emph and Exp). A line always starts
-# with DotMatrix.
-LABELS = [
-    lambda mode, style: f"{mode.name} {style.name}",
-    lambda mode, style: mode.name,
-    lambda mode, style: mode.name.replace("Emphasized", "Emph"),
-    lambda mode, style: mode.name.replace("Emphasized", "Emph").replace("Expanded", "Exp"),
-]
+# The title is in SemiExpanded (Pica) Bold, ruled off below
+TITLE_WIDTH = "SemiExpanded"
+RULE_CHARACTER = "═"
 
 
-def mode_lines(fonts_path, modes):
-    """Set each mode in each style, a line each. A line names its font. A page
-    says the same kind of thing on every line, the most it can: the name of the
-    font with its style, or the name of the font alone, or the name with its
-    words abbreviated. That is the fullest label that fits the lines of all the
-    modes of the page but one; a mode that is too long for it is abbreviated
-    further, the rest are not."""
-    width = TEXT_RIGHT - TEXT_LEFT
-    rows = {mode: [(style, get_font(fonts_path, mode.name, style.key)) for style in STYLES]
-            for mode in modes}
+def title_lines(fonts_path, text, group="Mono"):
+    """A title: centered, in the title width of the group, in Bold, and a
+    double rule across the page below it, in the plain width."""
+    face = get_font(fonts_path, group_mode(group, TITLE_WIDTH).name, "Bold")
+    title = [(text, face, (TEXT_LEFT + TEXT_RIGHT - text_width(face, text)) / 2)]
 
-    def fits(mode, index):
-        return all(text_width(face, LABELS[index](mode, style)) <= width
-                   for style, face in rows[mode])
+    rule_face = get_font(fonts_path, "DotMatrix Mono", "Regular")
+    count = int((TEXT_RIGHT - TEXT_LEFT) // text_width(rule_face, RULE_CHARACTER))
+    rule = text_line(rule_face, RULE_CHARACTER * count)
 
-    # The fullest label of each mode, and of the page: all modes but one fit it
-    fullest = {mode: next(i for i in range(len(LABELS)) if fits(mode, i)) for mode in modes}
-    page = next(i for i in range(len(LABELS))
-                if sum(1 for mode in modes if fullest[mode] > i) <= 1)
-
-    return [(LABELS[max(page, fullest[mode])](mode, style), face, False)
-            for mode in modes for style, face in rows[mode]]
+    return [title, rule]
 
 
-# The pages are the lines of the modes, with a blank line above and below
-def print_page(fonts_path):
-    return [None] + mode_lines(fonts_path, PRINT)
+def centered(lines):
+    """Center the lines of a page on the page."""
+    if len(lines) > LINES:
+        raise ValueError("The lines do not fit one page")
+
+    return [None] * ((LINES - len(lines)) // 2) + lines
 
 
-def expanded_page(fonts_path):
-    return [None] + mode_lines(fonts_path, EXPANDED)
+def style_initials(style):
+    """The style abbreviated to its initials: Bold Italic is BI."""
+    return "".join(word[0] for word in style.name.split())
 
 
-def proportional_page(fonts_path):
-    return [None] + mode_lines(fonts_path, PROPORTIONAL)
+# The groups, a page each
+GROUPS = ["Mono", "Sans"]
+
+
+def block_cells(fonts_path, group, width, column_width):
+    """The cells of the block of a width, a style each. A cell names its font:
+    the width (none for the plain width) and the style. The width is written in
+    full if all the styles fit with it, or with Expanded abbreviated (Exp). If a
+    style still does not fit, all the styles of the block are abbreviated to
+    their initials (R, B, I, BI). A width is named the same on the pages of
+    all the groups: the names must fit in every group."""
+
+    def labels(word, initials):
+        return [f"{word} {style_initials(style) if initials else style.name}".strip()
+                for style in STYLES]
+
+    def fits(word, initials):
+        return all(
+            text_width(get_font(fonts_path, group_mode(g, width).name, style.key), text)
+            <= column_width
+            for g in GROUPS
+            for style, text in zip(STYLES, labels(word, initials))
+        )
+
+    choices = [(word, initials)
+               for initials in (False, True)
+               for word in (width, width.replace("Expanded", "Exp"))]
+    word, initials = next(
+        (choice for choice in choices if fits(*choice)), (None, None)
+    )
+    if word is None:
+        raise ValueError(f"The styles of {width or 'the plain width'} do not fit a column")
+
+    mode = group_mode(group, width)
+    return [(text, get_font(fonts_path, mode.name, style.key))
+            for style, text in zip(STYLES, labels(word, initials))]
+
+
+def group_page(fonts_path, group):
+    """The page of a group: its title, and the blocks of its widths in pairs,
+    with a blank line between the pairs."""
+    family = f"DotMatrix {group}"
+    columns = len(PAGE_WIDTHS[0])
+    column_width = (TEXT_RIGHT - TEXT_LEFT - (columns - 1) * COLUMN_GAP) / columns
+
+    lines = title_lines(fonts_path, family, group)
+    for widths in PAGE_WIDTHS:
+        # The rule sets the first pair off from the title
+        if widths is not PAGE_WIDTHS[0]:
+            lines.append(None)
+        blocks = [block_cells(fonts_path, group, width, column_width) for width in widths]
+        for row in zip(*blocks):
+            lines.append([
+                (text, face, TEXT_LEFT + column * (column_width + COLUMN_GAP))
+                for column, (text, face) in enumerate(row)
+            ])
+
+    return centered(lines)
+
+
+def mono_page(fonts_path):
+    return group_page(fonts_path, "Mono")
+
+
+def sans_page(fonts_path):
+    return group_page(fonts_path, "Sans")
 
 
 def character_set_page(fonts_path):
     """The character set in code point order, as many characters as a line
     holds, without the combining marks (they have no cell of their own)."""
-    font = get_font(fonts_path, "DotMatrix", "Regular")
+    font = get_font(fonts_path, "DotMatrix Mono", "Regular")
     cmap = font.cmap
     characters = [
         chr(code)
@@ -364,24 +402,19 @@ def character_set_page(fonts_path):
     ]
 
     width = TEXT_RIGHT - TEXT_LEFT
-    lines = [
-        title_line(fonts_path, "Character set"),
-        None,
-    ]
+    # The title counts all the characters of the font, the marks included
+    lines = title_lines(fonts_path, f"{len(cmap)} characters")
 
     line = ""
     for character in characters:
         if text_width(font, line + character) > width:
-            lines.append((line, font, False))
+            lines.append(text_line(font, line))
             line = ""
         line += character
-    lines.append((line, font, False))
-
-    if len(lines) > LINES:
-        raise ValueError("The character set does not fit one page")
+    lines.append(text_line(font, line))
 
     # The title and the characters are centered on the page
-    return [None] * ((LINES - len(lines)) // 2) + lines
+    return centered(lines)
 
 
 # --- The printout ------------------------------------------------------------
@@ -441,32 +474,27 @@ def ink_mask(lines, rng):
         if line is None:
             continue
 
-        text, face, centered = line
-        x = (
-            (TEXT_LEFT + TEXT_RIGHT - text_width(face, text)) / 2
-            if centered
-            else TEXT_LEFT
-        )
-        x += PASS_OFFSET * (index % 2)
         y = index * LINE_HEIGHT + BASELINE
+        for text, face, x in line:
+            x += PASS_OFFSET * (index % 2)
 
-        radius = face.radius * unit
-        half = int(radius * 2.1)
-        grid_y, grid_x = np.mgrid[-half : half + 1, -half : half + 1].astype(np.float32)
+            radius = face.radius * unit
+            half = int(radius * 2.1)
+            grid_y, grid_x = np.mgrid[-half : half + 1, -half : half + 1].astype(np.float32)
 
-        for dot_x, dot_y in face.dots(text):
-            cx = x * SUPERSAMPLE + dot_x * unit
-            cy = y * SUPERSAMPLE - dot_y * unit
-            x0, y0 = int(round(cx)) - half, int(round(cy)) - half
-            if x0 < 0 or y0 < 0 or x0 + 2 * half + 1 > size[0] or y0 + 2 * half + 1 > size[1]:
-                continue
+            for dot_x, dot_y in face.dots(text):
+                cx = x * SUPERSAMPLE + dot_x * unit
+                cy = y * SUPERSAMPLE - dot_y * unit
+                x0, y0 = int(round(cx)) - half, int(round(cy)) - half
+                if x0 < 0 or y0 < 0 or x0 + 2 * half + 1 > size[0] or y0 + 2 * half + 1 > size[1]:
+                    continue
 
-            density, wick, _, _ = dot_ink(
-                grid_x - (cx - round(cx)), grid_y - (cy - round(cy)),
-                radius, np_rng, WEAVE_PITCH,
-            )
-            patch = ink[y0 : y0 + 2 * half + 1, x0 : x0 + 2 * half + 1]
-            patch[:] = 1 - (1 - patch) * (1 - np.maximum(density, wick))
+                density, wick, _, _ = dot_ink(
+                    grid_x - (cx - round(cx)), grid_y - (cy - round(cy)),
+                    radius, np_rng, WEAVE_PITCH,
+                )
+                patch = ink[y0 : y0 + 2 * half + 1, x0 : x0 + 2 * half + 1]
+                patch[:] = 1 - (1 - patch) * (1 - np.maximum(density, wick))
 
     ink = Image.fromarray((ink * 255).clip(0, 255).astype(np.uint8))
     ink = ink.resize(CANVAS, Image.LANCZOS)
@@ -524,13 +552,13 @@ MACRO_RENDER = (5632, 3456)
 # start of the description of the font is set in small print, as the FX-80 sets
 # the body of a document: in Compressed, in lines of a page, which run off the
 # photograph. The lines start under the first letter of the word, as on a printout.
-MACRO_TITLE = ("DotMatrix", "DotMatrixSemiExpanded-Regular.ttf")
+MACRO_TITLE = ("DotMatrix", "DotMatrixMonoSemiExpanded-Regular.ttf")
 MACRO_BODY = (
     "A contemporary revival of classic 1980s dot matrix printing, faithfully "
     "recreating the texture, rhythm, and mechanical imperfections of early "
     "impact printers."
 )
-MACRO_BODY_FONT = "DotMatrixCondensed-Regular.ttf"
+MACRO_BODY_FONT = "DotMatrixMonoCondensed-Regular.ttf"
 MACRO_BODY_COLUMNS = 70             # characters of a line of the body: a line of a page
 MACRO_BODY_LINES = 3                # two on the white lines, and one on the green below
 MACRO_SPAN = 0.62
@@ -1071,7 +1099,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
 
     if args.only != "presentation":
-        pages = [print_page, expanded_page, proportional_page, character_set_page]
+        pages = [mono_page, sans_page, character_set_page]
         for number, page in enumerate(pages, start=1):
             build_page(page(args.fonts), f"DotMatrix-Sample{number}.jpg", args.output)
 
